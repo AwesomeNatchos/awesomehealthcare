@@ -20,23 +20,31 @@ public class NatchaReaderXml {
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             Document document = documentBuilder.parse(new FileInputStream(filepath));
 
-            //Getting the class USERS
-            Element rootElement = document.getDocumentElement();
-            //System.out.println("The TAG NAME of root element: " + rootElement.getNodeName());
+            // It gets the list of all patients nodes
+           NodeList root = document.getElementsByTagName("patient");
+           for (int i=0; i< root.getLength(); i++) {
+               Node node = root.item(i);
+               if (node.getNodeType() == Node.ELEMENT_NODE) {
+                   Element element = (Element) node; // Here just casting the node into Element, because node does not have
 
-            //Inherited class PATIENT
-            NodeList childrenOfRootElement = rootElement.getElementsByTagName("patient");
-            for(int i=0; i < childrenOfRootElement.getLength(); i++){
-                Node childNode = childrenOfRootElement.item(i);
-                System.out.println(childNode.getNodeType());
-                Element element = (Element)childNode;
+                   //System.out.println(((Element) node).getElementsByTagName());
+                   //System.out.println(((Element) node).getElementsByTagName("name").item(0).getTextContent());
 
-                if(childNode.getNodeType() == Node.ELEMENT_NODE){
-                    System.out.println(((Element) childNode).getTextContent());
-                    System.out.println("" + element.getAttributeNode("name").getTextContent());
-                }
+                   String firstname = ((Element) element.getElementsByTagName("name").item(0)).getElementsByTagName("first").item(0).getTextContent();
 
-            }
+                   String lastname = ((Element) element.getElementsByTagName("name").item(0)).getElementsByTagName("last").item(0).getTextContent();
+
+                   System.out.println(firstname);
+                   System.out.println(lastname);
+
+                   System.out.println(element.getElementsByTagName("age").item(0).getTextContent());
+                   System.out.println(element.getElementsByTagName("phoneNumber").item(0).getTextContent());
+               }
+
+               System.out.println("");
+
+           }
+
 
 
         } catch (Exception e){

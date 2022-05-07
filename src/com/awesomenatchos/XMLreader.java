@@ -11,7 +11,6 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 
 public class XMLreader {
-
     public static ArrayList<Users> readUserFromXml(String filepath){
         ArrayList<Users> users = new ArrayList<>();
         try{
@@ -19,47 +18,43 @@ public class XMLreader {
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             Document document = documentBuilder.parse(new FileInputStream(filepath));
 
-            //Getting the class USERS
             Element rootElement = document.getDocumentElement();
-            System.out.println("The TAG NAME of root element: " + rootElement.getNodeName());
-            /*System.out.println("The node type of root element: " + rootElement.getNodeType());
-            System.out.println("The node type of element nodes: " + Node.ELEMENT_NODE);
-            System.out.println("The node type of text nodes: " + Node.TEXT_NODE);*/
 
-            // Inherited class PATIENT
             NodeList childrenOfRootElement = rootElement.getChildNodes();       //Now we are getting subclasses (doctors, patiens, family)
 
             for(int i=0; i < childrenOfRootElement.getLength(); i++){
-                Node childNode = childrenOfRootElement.item(i);             //Get instances tag nodes
-                //System.out.println(i + ". Child node: " + childNode.getNodeName());             //Print out the patient class
-                /*
-                System.out.println(i + ". child node: node type is " + childNode.getNodeType()
-                                     + ", tag name is " + childNode.getNodeName());*/
+                Node childNode = childrenOfRootElement.item(i);             //Get a child node object  User tag
+                //System.out.println(i + ". Childnode: " + childNode.getNodeName());
 
                 if(childNode.getNodeType() == Node.ELEMENT_NODE){
-                    NodeList childrenOfUserTag = childNode.getChildNodes();             //get all the INSTANCES
+                    NodeList childrenOfUserTag = childNode.getChildNodes();             //get all the children nodes from user tag
                     String name = "";
                     int age = 0;
+                    int doctorID = 0;
                     int phoneNumber = 0;
+
 
                     //Getting the inheritance classes
                     for(int j= 0; j< childrenOfUserTag.getLength(); j++){
-                        Node childNodeOfUserTag = childrenOfUserTag.item(j);
-                       // System.out.println(childrenOfUserTag.item(j));
-                        //System.out.println(childrenNodeOfUserTag.getNodeName() + "  Node type " + childrenNodeOfUserTag.getNodeType());
-                        //System.out.println(childrenOfUserTag.item(j));
-                        if(childNodeOfUserTag.getNodeType() == Node.ELEMENT_NODE){
+                        Node childrenNodeOfUserTag = childrenOfUserTag.item(j);
+                        if(childrenNodeOfUserTag.getNodeType() == Node.ELEMENT_NODE){
+
+                            //Finding attributes from doctors, patients and family
+                            switch (childrenNodeOfUserTag.getNodeName()){
+                                case "name" -> name = childrenNodeOfUserTag.getTextContent();
+                                case "age" -> age = Integer.parseInt(childrenNodeOfUserTag.getTextContent());
+                                case "doctorID" -> doctorID = Integer.parseInt(childrenNodeOfUserTag.getTextContent());
+                                case "phoneNumber" -> phoneNumber = Integer.parseInt(childrenNodeOfUserTag.getTextContent());
 
 
-                            //Finding attributes patients
-                            switch (childNodeOfUserTag.getNodeName()){
-                                case "name" -> name = childNodeOfUserTag.getTextContent();
-                                case "age" -> age = Integer.parseInt(childNodeOfUserTag.getTextContent());
-                                case "phoneNumber" -> phoneNumber = Integer.parseInt((childNodeOfUserTag.getTextContent()));
+
                             }
                         }
+
                     }
-                    users.add(new Patient(name,age,phoneNumber));
+                    users.add(new Users(name,age));
+
+
                 }
             }
 
@@ -67,19 +62,6 @@ public class XMLreader {
             e.printStackTrace();
         }
         return users;
-    }
-
-
-    public static void main(String[] args) {
-
-
-        String xlm = "src/com/awesomenatchos/Patients.xml";
-
-        ArrayList<Users> allpatients = XMLreader.readUserFromXml(xlm);
-
-        System.out.print(allpatients);
-
-
     }
 
 }

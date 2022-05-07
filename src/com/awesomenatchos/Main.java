@@ -3,7 +3,7 @@ package com.awesomenatchos;
 import java.util.ArrayList;
 
 
-public class Main {
+public class Main extends XMLreader{
     public ArrayList addPatients(ArrayList<Patient> allPatients, Patient user){
         allPatients.add(user);
         return allPatients;
@@ -18,6 +18,16 @@ public class Main {
             System.out.println();
         }
     }
+
+    public static void print_ArrayList2(ArrayList<Users> allpatients){
+        Users patient;
+        for(int i=0; i<allpatients.size(); i++){
+            patient = allpatients.get(i);
+            System.out.print((i+1) + " Name: " + patient.getName() + "\tage: " + patient.getAge());
+            System.out.println();
+        }
+    }
+
     public static void main(String[] args) {
         ArrayList <Patient> allPatients = new ArrayList<>();
         Doctor amir = new Doctor("Amir", 26, 123);
@@ -25,9 +35,11 @@ public class Main {
         Patient sol = new Patient("Sol", 22, 54321);
 
         //Adding patients to list
-        allPatients.add(natcha);
-        allPatients.add(sol);
-        print_ArrayList(allPatients);
+        //allPatients.add(natcha);
+        //allPatients.add(sol);
+
+        ArrayList <Users> user = readUserFromXml("src/com/awesomenatchos/Users.xml");
+        print_ArrayList2(user);
 
 
 

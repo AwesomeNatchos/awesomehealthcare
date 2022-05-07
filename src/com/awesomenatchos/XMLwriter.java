@@ -19,7 +19,7 @@ public class XMLwriter {
     private static Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) {
-        String filepath = "C:\\Users\\Natcha\\IdeaProjects\\awesomehealthcare\\src\\com\\awesomenatchos\\Users.xml";
+        String filepath = "src/com/awesomenatchos/Users.xml";
         ArrayList<Users> allusers = XMLreader.readUserFromXml(filepath);
 
         // menu system of the application with create, read, update and delete options

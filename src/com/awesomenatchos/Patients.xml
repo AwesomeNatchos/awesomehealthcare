@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <users>
     <patient>
-        <name>Natcha</name>
+        <name>
+            <first>Natcha0</first>
+            <last>Uthaug0</last>
+        </name>
+        <age>30</age>
+        <phoneNumber>90113044</phoneNumber>
+    </patient>
+
+    <patient>
+        <name>
+            <first>Natcha1</first>
+            <last>Uthaug1</last>
+        </name>
+        <age>30</age>
+        <phoneNumber>90113044</phoneNumber>
+    </patient>
+
+    <patient>
+        <name>
+            <first>Natcha2</first>
+            <last>Uthaug2</last>
+        </name>
         <age>30</age>
         <phoneNumber>90113044</phoneNumber>
     </patient>
